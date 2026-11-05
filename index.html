@@ -284,73 +284,34 @@ let enteredPasscode = "";
 
 // SWIPE TO PASSCODE
 
-const swipeArea = document.getElementById("swipeArea");
 
-let touchStartY = 0;
-let touchStartX = 0;
+// SWIPE TO PASSCODE
 
-swipeArea.addEventListener("pointerdown", function(e) {
-  touchStartY = e.clientY;
-  touchStartX = e.clientX;
-});
-
-swipeArea.addEventListener("pointerup", function(e) {
-
-  const differenceY = touchStartY - e.clientY;
-  const differenceX = Math.abs(touchStartX - e.clientX);
-
-  if (differenceY > 35 && differenceX < 80) {
-    showPasscode();
-  }
-
-});
-
-
-// SHOW PASSCODE SCREEN
 
 function showPasscode() {
-
-
-// SHOW PASSCODE SCREEN WITH SLIDE ANIMATION
-
-function showPasscode() {
-
   const lock = document.getElementById("lock");
   const passcode = document.getElementById("passcode");
 
   if (lock.classList.contains("unlocking")) return;
 
-  document.getElementById("statusTime")
-    .classList.add("status-time-hidden");
-
   enteredPasscode = "";
-
   updatePasscodeDots();
 
   document.getElementById("passcodeError").textContent = "";
 
-  // Prepare the passcode screen
   passcode.style.display = "block";
-
-  // Slide the entire lock screen upward
   lock.classList.add("unlocking");
 
-  // Wait for the animation to finish
   lock.addEventListener("transitionend", function handler(e) {
-
     if (e.propertyName !== "transform") return;
 
     lock.style.display = "none";
     lock.classList.remove("unlocking");
 
     lock.removeEventListener("transitionend", handler);
-
   });
-
 }
 
-
-}
 
 
 // CANCEL PASSCODE
