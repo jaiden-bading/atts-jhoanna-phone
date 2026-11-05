@@ -485,6 +485,143 @@ body {
     height: 55px;
   }
 }
+
+/* IPHONE PHOTOS APP */
+
+.ios-photos {
+  margin: -10px -5px 0;
+  padding-bottom: 65px;
+  color: #111;
+}
+
+.photos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.photos-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.select-button {
+  background: #ededf2;
+  color: #3478f6;
+  border-radius: 18px;
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+.photos-subheader {
+  display: flex;
+  justify-content: space-between;
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.photo-grid-ios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.photo-item {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: #ddd;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photos-bottom-nav {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  height: 55px;
+  border-radius: 25px;
+  background: #f4f4f6ee;
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
+
+.photos-bottom-nav div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #777;
+  font-size: 10px;
+}
+
+.photos-bottom-nav span {
+  font-size: 19px;
+}
+
+.photos-bottom-nav .active {
+  color: #3478f6;
+}
+
+/* FULL-SCREEN PHOTO VIEWER */
+
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  padding: 55px 12px 25px;
+}
+
+.viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.viewer-header button {
+  color: #3478f6;
+  background: none;
+  font-size: 15px;
+}
+
+.viewer-image {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-image img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.viewer-caption {
+  text-align: center;
+  font-size: 14px;
+  padding: 15px 0;
+}
+
 </style>
 </head>
 
@@ -1076,6 +1213,37 @@ function updateClock() {
 
   document.getElementById("lockDate").textContent = date;
 
+}
+
+  function openPhoto(index) {
+
+  const photo = character.photos[index];
+
+  document.getElementById("appContent").innerHTML = `
+
+    <div class="photo-viewer">
+
+      <div class="viewer-header">
+        <button onclick="renderPhotos()">‹ Library</button>
+        <span>${photo.date}</span>
+      </div>
+
+      <div class="viewer-image">
+        <img src="${photo.src}" alt="${photo.title}">
+      </div>
+
+      <div class="viewer-caption">
+        ${photo.title}
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+function renderPhotos() {
+  openApp("photos");
 }
 
 
