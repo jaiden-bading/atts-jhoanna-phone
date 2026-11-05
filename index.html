@@ -276,6 +276,43 @@ Some things are better left unsaid.`,
 };
 
 
+
+// =========================================
+// SWIPE TO UNLOCK
+// =========================================
+
+const lockScreen = document.getElementById("lock");
+
+let startY = 0;
+let startX = 0;
+let isDragging = false;
+
+lockScreen.addEventListener("pointerdown", function(e) {
+  if (e.target.closest(".lock-shortcut")) return;
+
+  startY = e.clientY;
+  startX = e.clientX;
+  isDragging = true;
+});
+
+window.addEventListener("pointerup", function(e) {
+  if (!isDragging) return;
+
+  const moveY = startY - e.clientY;
+  const moveX = Math.abs(startX - e.clientX);
+
+  isDragging = false;
+
+  if (moveY > 40 && moveX < 100) {
+    showPasscode();
+  }
+});
+
+window.addEventListener("pointercancel", function() {
+  isDragging = false;
+});
+
+
 // PASSCODE CONFIGURATION
 
 const correctPasscode = "0126";
