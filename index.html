@@ -725,14 +725,13 @@ body {
 
 const character = {
 
-  name: "Alex",
+  name: "Jhoanna",
 
   messages: [
-    ["Jamie", "Are you awake?"],
-    ["Alex", "Unfortunately."],
-    ["Jamie", "We need to talk."],
-    ["Alex", "About what?"],
-    ["Jamie", "You know exactly what."]
+    ["Colet", "Are you awake?"],
+    ["Jhoanna", "Yes. Miss mo na agad ako?"],
+    ["Colet", "Sige. Good night na lang tuloy."],
+    ["Jhoanna", "It was a joke, Vergara."],
   ],
 
   notes: `Things I need to remember:
@@ -944,33 +943,33 @@ function openApp(name) {
       </div>
     `,
 
-    /* social: `
+     social: `
       <h2>Social</h2>
 
       <div class="note">
-        @alex
+        @jhorobles
 
-        Just another ordinary day.
+        Kineme blah blah tennis something
 
         ❤️ 128 likes
       </div>
-    `, */
+    `,
 
-    /* calendar: `
+     calendar: `
       <h2>Calendar</h2>
 
       <div class="note">
         November 5
 
-        9:00 AM — Class
+        9:00 AM — Tennis Practice
 
-        2:00 PM — Meet Jamie
+        2:00 PM — Meeting
 
-        8:00 PM — Call home
+        5:00 PM — Tennis Practice
       </div>
-    `, */
+    `,
 
-    /* settings: `
+     settings: `
       <h2>Settings</h2>
 
       <div class="chat">✈️ Airplane Mode</div>
@@ -979,7 +978,7 @@ function openApp(name) {
       <div class="chat">👤 About ${character.name}</div>
     `
 
-  }; */
+  };
 
   content.innerHTML = apps[name] || "<h2>App not found</h2>";
 
