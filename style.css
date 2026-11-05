@@ -96,7 +96,12 @@ body {
   z-index: 20;
 }
 
-/* SCREEN LAYOUT */
+
+/* =========================================
+   SCREEN LAYOUT
+   Positions the lock, passcode, home, and app
+   screens inside the phone display.
+========================================= */
 
 .lock,
 .passcode,
@@ -109,35 +114,38 @@ body {
 }
 
 /* Initially show only the lock screen */
-
 .lock {
   display: block;
   z-index: 1;
+
+  /* Lock screen content positioning */
+  text-align: center;
+  padding-top: 117px;
+
+  /* Lock screen wallpaper */
+  background-image: url("icons/lockscreen.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Swipe gesture and unlock animation */
+  transform: translateY(0);
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
+/* Hide the other screens until needed */
 .passcode,
 .home,
 .app {
   display: none;
 }
 
-/* LOCK SCREEN */
-
-.lock {
-  text-align: center;
-  padding-top: 117px;
-  background-image: url("icons/lockscreen.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-  
-.lock-shortcut img {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
-  display: block;
-}
+/* =========================================
+   LOCK SCREEN DATE AND CLOCK
+========================================= */
 
 .lock-date {
   font-size: 16px;
@@ -152,22 +160,29 @@ body {
   line-height: 1.1;
 }
 
-/* SWIPE TO UNLOCK */
+/* =========================================
+   SWIPE TO UNLOCK
+   Displays the swipe instruction at the
+   bottom of the lock screen.
+========================================= */
 
 .swipe-area {
   position: absolute;
-  bottom: 12px;
+  bottom: 8px;
   left: 0;
   right: 0;
-  height: 65px;
+  height: 55px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 9px;
+
   cursor: grab;
   touch-action: none;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 .swipe-text {
@@ -184,15 +199,22 @@ body {
   background: #ffffffd9;
 }
 
-/* LOCK SCREEN SHORTCUTS */
+/* =========================================
+   LOCK SCREEN SHORTCUTS
+   Flashlight and camera shortcut icons.
+========================================= */
 
 .lock-shortcuts {
   position: absolute;
   bottom: 28px;
   left: 22px;
   right: 22px;
+
   display: flex;
   justify-content: space-between;
+
+  /* Prevent decorative shortcuts from
+     interfering with swipe gestures. */
   pointer-events: none;
 }
 
@@ -202,9 +224,39 @@ body {
   border-radius: 50%;
   background: #0005;
   border: 1px solid #ffffff35;
+
   display: grid;
   place-items: center;
-  font-size: 19px;
+}
+
+.lock-shortcut img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+}
+
+/* =========================================
+   LOCK SCREEN UNLOCK ANIMATION
+   Moves the lock screen upward when swiped.
+========================================= */
+
+.lock.unlocking {
+  transform: translateY(-100%);
+}
+
+
+/* Initially show only the lock screen */
+
+.lock {
+  display: block;
+  z-index: 1;
+}
+
+.passcode,
+.home,
+.app {
+  display: none;
 }
 
 /* PASSCODE SCREEN */
@@ -613,19 +665,3 @@ body {
   font-size: 14px;
   padding: 15px 0;
 }
-
-
-/* LOCK SCREEN UNLOCK ANIMATION */
-
-.lock {
-  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
-  transform: translateY(0);
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.lock.unlocking {
-  transform: translateY(-100%);
-}
-
