@@ -742,7 +742,32 @@ const character = {
 
 Some things are better left unsaid.`,
 
-  photos: ["🌅", "🌆", "🌙", "☕", "🌊", "📷"]
+  photos:  [
+      {
+        src: "gallery/gallery1.jpg"
+      },
+      {
+        src: "gallery/gallery2.jpg
+      },
+      {
+        src: "gallery/gallery3.jpg"
+      },
+      {
+        src: "gallery/gallery4.jpg"
+      },
+      {
+        src: "gallery/gallery5.jpg"
+      },
+      {
+        src: "gallery/gallery6.jpg"
+      },
+      {
+        src: "gallery/gallery7.jpg"
+      },
+      {
+        src: "gallery/gallery8.jpg"
+      },
+    ]
 
 };
 
@@ -921,15 +946,45 @@ function openApp(name) {
     `,
 
     photos: `
-      <h2>Photos</h2>
-      <p>Recent memories</p>
+  <div class="ios-photos">
 
-      <div class="photo-grid">
-        ${character.photos.map(p => `
-          <div class="photo">${p}</div>
-        `).join("")}
+    <div class="photos-header">
+      <h1>Library</h1>
+      <button class="select-button">Select</button>
+    </div>
+
+    <div class="photos-subheader">
+      <span>All Photos</span>
+      <span>Recent</span>
+    </div>
+
+    <div class="photo-grid-ios">
+
+      ${character.photos.map((p, index) => `
+        <div class="photo-item" onclick="openPhoto(${index})">
+          <img src="${p.src}" alt="${p.title}">
+        </div>
+      `).join("")}
+
+    </div>
+
+    <div class="photos-bottom-nav">
+      <div class="active">
+        <span>▦</span>
+        Library
       </div>
-    `,
+      <div>
+        <span>▤</span>
+        Collections
+      </div>
+      <div>
+        <span>⌕</span>
+        Search
+      </div>
+    </div>
+
+  </div>
+`,
 
     music: `
       <h2>Music</h2>
