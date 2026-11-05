@@ -24,16 +24,10 @@ body {
 }
 
 .phone {
-  width: min(390px, 96vw);
-  height: min(820px, 94dvh);
-  min-height: 540px;
-  background: #090909;
-  border: 7px solid #333;
-  border-radius: 48px;
-  padding: 10px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 25px 80px #0009;
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
 }
 
 .screen {
@@ -258,9 +252,14 @@ body {
 /* HOME SCREEN */
 
 .home {
-  display: none;
-  padding: 22px 17px 65px;
-  background: linear-gradient(150deg, #596c7d, #273647 55%, #171e2c);
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
 }
 
 .welcome {
