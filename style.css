@@ -629,9 +629,3 @@ body {
   transform: translateY(-100%);
 }
 
-/* PASSCODE SCREEN */
-
-.passcode {
-  z-index: 3;
-}
-
