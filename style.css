@@ -1,0 +1,7 @@
+.app-image {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 13px;
+  box-shadow: 0 3px 9px #0003;
+}
