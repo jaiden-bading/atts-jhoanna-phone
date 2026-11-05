@@ -262,33 +262,17 @@ const character = {
 
 Some things are better left unsaid.`,
 
-  photos:  [
-      {
-        src: "gallery/gallery1.jpg"
-      },
-      {
-        src: "gallery/gallery2.jpg
-      },
-      {
-        src: "gallery/gallery3.jpg"
-      },
-      {
-        src: "gallery/gallery4.jpg"
-      },
-      {
-        src: "gallery/gallery5.jpg"
-      },
-      {
-        src: "gallery/gallery6.jpg"
-      },
-      {
-        src: "gallery/gallery7.jpg"
-      },
-      {
-        src: "gallery/gallery8.jpg"
-      },
-    ]
-
+  photos:
+  [
+    { src: "gallery/gallery1.jpg", title: "Photo 1" },
+    { src: "gallery/gallery2.jpg", title: "Photo 2" },
+    { src: "gallery/gallery3.jpg", title: "Photo 3" },
+    { src: "gallery/gallery4.jpg", title: "Photo 4" },
+    { src: "gallery/gallery5.jpg", title: "Photo 5" },
+    { src: "gallery/gallery6.jpg", title: "Photo 6" },
+    { src: "gallery/gallery7.jpg", title: "Photo 7" },
+    { src: "gallery/gallery8.jpg", title: "Photo 8" }
+  ]
 };
 
 
@@ -326,11 +310,18 @@ swipeArea.addEventListener("pointerup", function(e) {
 
 function showPasscode() {
 
-  document.getElementById("statusTime").classList.add("status-time-hidden");
 
-  document.getElementById("lock").style.display = "none";
+// SHOW PASSCODE SCREEN WITH SLIDE ANIMATION
 
-  document.getElementById("passcode").style.display = "block";
+function showPasscode() {
+
+  const lock = document.getElementById("lock");
+  const passcode = document.getElementById("passcode");
+
+  if (lock.classList.contains("unlocking")) return;
+
+  document.getElementById("statusTime")
+    .classList.add("status-time-hidden");
 
   enteredPasscode = "";
 
@@ -338,18 +329,45 @@ function showPasscode() {
 
   document.getElementById("passcodeError").textContent = "";
 
+  // Prepare the passcode screen
+  passcode.style.display = "block";
+
+  // Slide the entire lock screen upward
+  lock.classList.add("unlocking");
+
+  // Wait for the animation to finish
+  lock.addEventListener("transitionend", function handler(e) {
+
+    if (e.propertyName !== "transform") return;
+
+    lock.style.display = "none";
+    lock.classList.remove("unlocking");
+
+    lock.removeEventListener("transitionend", handler);
+
+  });
+
+}
+
+
 }
 
 
 // CANCEL PASSCODE
-
 function cancelPasscode() {
 
-  document.getElementById("statusTime").classList.add("status-time-hidden");
+  const lock = document.getElementById("lock");
+
+  document.getElementById("statusTime")
+    .classList.add("status-time-hidden");
 
   document.getElementById("passcode").style.display = "none";
 
-  document.getElementById("lock").style.display = "block";
+  lock.style.display = "block";
+  lock.classList.remove("unlocking");
+
+  // Reset the lock screen position
+  lock.style.transform = "translateY(0)";
 
   enteredPasscode = "";
 
@@ -632,11 +650,14 @@ function renderPhotos() {
 
 // INITIAL DISPLAY
 
-document.getElementById("statusTime").classList.add("status-time-hidden");
+document.getElementById("statusTime")
+  .classList.add("status-time-hidden");
 
+// Display the actual local date and time
 updateClock();
 
-setInterval(updateClock, 30000);
+// Refresh every second
+setInterval(updateClock, 1000);
 
 </script>
 
