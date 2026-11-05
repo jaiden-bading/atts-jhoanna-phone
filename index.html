@@ -2,407 +2,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">  <!-- page config -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inside Jhoanna's phone</title>
-  <style>                /* iPhone style */
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #20232b;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      color: white;
-    }
-    .phone {            /* for phone frame */
-      width: min(390px, 96vw);
-      height: min(820px, 94dvh);
-      min-height: 540px;
-      background: #090909;
-      border: 7px solid #333;
-      border-radius: 48px;
-      padding: 10px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 25px 80px #0009;
-    }
-    .screen {          /* phone screen */
-      width: 100%;
-      height: 100%;
-      border-radius: 34px;
-      overflow: hidden;
-      position: relative;
-      background: linear-gradient(160deg, #536c83, #263747 48%, #171c29);
-    }
-    .status {          /* phone status bar */
-      height: 42px;
-      padding: 12px 25px 0;
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      font-weight: 600;
-      position: relative;
-      z-index: 5;
-    }
-    .dynamic-island {    /* iPhone dynamic island for later versions haha */
-      position: absolute;
-      width: 105px;
-      height: 27px;
-      border-radius: 20px;
-      background: black;
-      left: 50%;
-      top: 8px;
-      transform: translateX(-50%);
-    }
-    .lock, .home, .app {      /* positioning */
-      position: absolute;
-      inset: 42px 0 0;
-    }    
-    .lock {                   /* lock screen */
-      text-align: center;
-      padding-top: 75px;
-      background: linear-gradient(160deg, #607d95aa, #11182755);
-    }
-    .date {                  /* date */
-      font-size: 16px;
-    }
-    .clock {                  /* setting the time */
-      font-size: 76px;
-      font-weight: 300;
-      letter-spacing: -4px;
-      margin-top: 8px;
-    }
-    .unlock {
-      position: absolute;
-      bottom: 65px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 1px solid #ffffff88;
-      border-radius: 30px;
-      background: #ffffff22;
-      color: white;
-      padding: 12px 26px;
-      font-size: 14px;
-      cursor: pointer;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside Jhoanna's Phone</title>
 
-    /* =====================================
-       4. HOME SCREEN
-       ===================================== */
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    .home {
-      display: none;
-      padding: 22px 17px 65px;
-      background: linear-gradient(150deg, #596c7d, #273647 55%, #171e2c);
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #20232b;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "Helvetica Neue", sans-serif;
+  color: white;
+}
 
-    .welcome {
-      font-size: 14px;
-      margin: 10px 3px 24px;
-    }
+.phone {
+  width: min(390px, 96vw);
+  height: min(820px, 94dvh);
+  min-height: 540px;
+  background: #090909;
+  border: 7px solid #333;
+  border-radius: 48px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 80px #0009;
+}
 
-    /* App icon arrangement */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px 10px;
-    }
+.screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 34px;
+  overflow: hidden;
+  position: relative;
+  background: #263747;
+}
 
-    .app-icon {
-      border: 0;
-      background: none;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      cursor: pointer;
-    }
+/* STATUS BAR */
 
-    /* Individual app icons */
-    .emoji {
-      width: 54px;
-      height: 54px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      font-size: 29px;
-      background: #ffffff25;
-      box-shadow: 0 3px 9px #0003;
-      backdrop-filter: blur(12px);
-    }
+.status {
+  height: 42px;
+  padding: 12px 25px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 650;
+  position: relative;
+  z-index: 15;
+  pointer-events: none;
+}
 
-    /* =====================================
-       5. BOTTOM APP DOCK
-       ===================================== */
+.dynamic-island {
+  position: absolute;
+  width: 105px;
+  height: 28px;
+  border-radius: 20px;
+  background: #000;
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+  z-index: 20;
+}
 
-    .dock {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      height: 85px;
-      border-radius: 25px;
-      background: #ffffff25;
-      backdrop-filter: blur(15px);
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-    }
+/* LOCK SCREEN */
 
-    /* =====================================
-       6. APPLICATION WINDOWS
-       ===================================== */
+.lock,
+.passcode,
+.home,
+.app {
+  position: absolute;
+  inset: 42px 0 0;
+}
 
-    .app {
-      display: none;
-      background: #f5f5f7;
-      color: #161616;
-      padding: 20px;
-      overflow-y: auto;
-      z-index: 3;
-    }
+.lock {
+  text-align: center;
+  padding-top: 75px;
+  background:
+    linear-gradient(160deg, #607d95aa, #11182755),
+    linear-gradient(160deg, #536c83, #263747 48%, #171c29);
+}
 
-    .app h2 {
-      font-size: 27px;
-    }
+.lock-date {
+  font-size: 16px;
+  font-weight: 500;
+}
 
-    .app button {
-      cursor: pointer;
-      border: 0;
-    }
+.clock {
+  font-size: 76px;
+  font-weight: 300;
+  letter-spacing: -4px;
+  margin-top: 8px;
+  line-height: 1.1;
+}
 
-    /* Back navigation button */
-    .back {
-      color: #287bea;
-      background: none;
-      font-size: 15px;
-      padding: 8px 0;
-    }
+/* SMALL SWIPE INDICATOR */
 
-    /* Message bubbles */
-    .chat {
-      background: white;
-      border-radius: 14px;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 14px;
-    }
+.swipe-area {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
 
-    /* Notes appearance */
-    .note {
-      background: #fff4bb;
-      padding: 18px;
-      border-radius: 12px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
+.swipe-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffffffc9;
+  letter-spacing: .2px;
+}
 
-    /* Photos gallery */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
+.swipe-line {
+  width: 35px;
+  height: 4px;
+  border-radius: 10px;
+  background: #ffffffd9;
+}
 
-    .photo {
-      height: 135px;
-      border-radius: 12px;
-      background: linear-gradient(140deg, #9aaaba, #43586c);
-      display: grid;
-      place-items: center;
-      font-size: 30px;
-    }
+/* LOCK SCREEN SHORTCUTS */
 
-    /* Bottom home indicator */
-    .home-indicator {
-      position: absolute;
-      bottom: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 105px;
-      height: 4px;
-      background: white;
-      border-radius: 5px;
-      z-index: 10;
-      cursor: pointer;
-    }
+.lock-shortcuts {
+  position: absolute;
+  bottom: 28px;
+  left: 22px;
+  right: 22px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
 
-    /* Responsive layout for shorter screens */
-    @media (max-height: 650px) {
-      .home {
-        padding-top: 10px;
-      }
+.lock-shortcut {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background: #0005;
+  border: 1px solid #ffffff35;
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+}
 
-      .grid {
-        gap: 12px 8px;
-      }
+/* PASSCODE SCREEN */
 
-      .emoji {
-        width: 44px;
-        height: 44px;
-      }
-    }
-  </style>
+.passcode {
+  display: none;
+  text-align: center;
+  padding-top: 45px;
+  background: linear-gradient(160deg, #536c83, #263747 48%, #171c29);
+  z-index: 4;
+}
+
+.passcode-title {
+  font-size: 23px;
+  font-weight: 600;
+  margin-bottom: 9px;
+}
+
+.passcode-subtitle {
+  font-size: 14px;
+  color: #ffffffc9;
+}
+
+.passcode-dots {
+  display: flex;
+  justify-content: center;
+  gap: 19px;
+  margin: 27px 0 17px;
+}
+
+.passcode-dot {
+  width: 11px;
+  height: 11px;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+.passcode-dot.filled {
+  background: white;
+}
+
+.passcode-error {
+  height: 20px;
+  font-size: 12px;
+  color: #ffb7b7;
+  margin-bottom: 12px;
+}
+
+.keypad {
+  width: 240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px 18px;
+}
+
+.key {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 1px solid #ffffff25;
+  background: #ffffff20;
+  color: white;
+  font-size: 27px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:active {
+  background: #ffffff55;
+}
+
+.key small {
+  font-size: 8px;
+  letter-spacing: 1px;
+  margin-top: -2px;
+}
+
+.key.empty {
+  visibility: hidden;
+}
+
+.key.delete {
+  background: transparent;
+  border: none;
+  font-size: 19px;
+}
+
+.passcode-cancel {
+  position: absolute;
+  bottom: 38px;
+  left: 0;
+  right: 0;
+  background: none;
+  color: white;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* HOME SCREEN */
+
+.home {
+  display: none;
+  padding: 22px 17px 65px;
+  background: linear-gradient(150deg, #596c7d, #273647 55%, #171e2c);
+}
+
+.welcome {
+  font-size: 14px;
+  margin: 10px 3px 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 10px;
+}
+
+.app-icon {
+  border: 0;
+  background: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.emoji {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 29px;
+  background: #ffffff25;
+  box-shadow: 0 3px 9px #0003;
+  backdrop-filter: blur(12px);
+}
+
+.dock {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  height: 85px;
+  border-radius: 25px;
+  background: #ffffff25;
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+/* APPLICATION WINDOWS */
+
+.app {
+  display: none;
+  background: #f5f5f7;
+  color: #161616;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.app h2 {
+  font-size: 27px;
+}
+
+.app button {
+  cursor: pointer;
+  border: 0;
+}
+
+.back {
+  color: #287bea;
+  background: none;
+  font-size: 15px;
+  padding: 8px 0;
+}
+
+.chat {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.note {
+  background: #fff4bb;
+  padding: 18px;
+  border-radius: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.photo {
+  height: 135px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, #9aaaba, #43586c);
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+}
+
+/* HOME INDICATOR */
+
+.home-indicator {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 105px;
+  height: 4px;
+  background: white;
+  border-radius: 5px;
+  z-index: 25;
+  cursor: pointer;
+}
+
+@media (max-height: 650px) {
+  .home {
+    padding-top: 10px;
+  }
+
+  .grid {
+    gap: 12px 8px;
+  }
+
+  .emoji {
+    width: 44px;
+    height: 44px;
+  }
+
+  .passcode {
+    padding-top: 20px;
+  }
+
+  .keypad {
+    gap: 7px 15px;
+  }
+
+  .key {
+    width: 55px;
+    height: 55px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =====================================
-       7. IPHONE DEVICE FRAME
-       ===================================== -->
+<div class="phone">
+  <div class="screen">
 
-  <div class="phone">
-    <div class="screen">
+    <div class="dynamic-island"></div>
 
-      <!-- Dynamic Island -->
-      <div class="dynamic-island"></div>
+    <div class="status">
+      <span id="statusTime">9:41</span>
+      <span>●●●  Wi-Fi  ▰</span>
+    </div>
 
-      <!-- Status bar with time and indicators -->
-      <div class="status">
-        <span id="statusTime">9:41</span>
-        <span>●●● Wi-Fi ▰</span>
+    <!-- LOCK SCREEN -->
+
+    <section class="lock" id="lock">
+
+      <div class="lock-date" id="lockDate">
+        Thursday, November 5
       </div>
 
-      <!-- =================================
-           8. LOCK SCREEN
-           ================================= -->
+      <div class="clock" id="clock">9:41</div>
 
-      <section class="lock" id="lock">
+      <div class="lock-shortcuts">
+        <div class="lock-shortcut">🔦</div>
+        <div class="lock-shortcut">📷</div>
+      </div>
 
-        <!-- Lock screen date -->
-        <div class="date">Wednesday, November 5</div>
+      <!-- Swipe upward in this area -->
 
-        <!-- Lock screen clock -->
-        <div class="clock" id="clock">9:41</div>
+      <div class="swipe-area" id="swipeArea">
+        <div class="swipe-text">Swipe up to unlock</div>
+        <div class="swipe-line"></div>
+      </div>
 
-        <!-- Unlock button -->
-        <button class="unlock" onclick="unlockPhone()">
-          Swipe up to unlock ↑
+    </section>
+
+    <!-- PASSCODE SCREEN -->
+
+    <section class="passcode" id="passcode">
+
+      <div class="passcode-title">Enter Passcode</div>
+
+      <div class="passcode-subtitle">
+        Enter your passcode to unlock iPhone
+      </div>
+
+      <div class="passcode-dots" id="passcodeDots">
+        <div class="passcode-dot"></div>
+        <div class="passcode-dot"></div>
+        <div class="passcode-dot"></div>
+        <div class="passcode-dot"></div>
+      </div>
+
+      <div class="passcode-error" id="passcodeError"></div>
+
+      <div class="keypad">
+
+        <button class="key" onclick="enterDigit('1')">
+          1
         </button>
 
-      </section>
-
-      <!-- =================================
-           9. HOME SCREEN
-           ================================= -->
-
-      <section class="home" id="home">
-
-        <div class="welcome">Good morning ☁️</div>
-
-        <!-- Application icons -->
-        <div class="grid">
-
-          <button class="app-icon" onclick="openApp('messages')">
-            <span class="emoji">💬</span>
-            Messages
-          </button>
-
-          <button class="app-icon" onclick="openApp('photos')">
-            <span class="emoji">🌄</span>
-            Photos
-          </button>
-
-          <button class="app-icon" onclick="openApp('notes')">
-            <span class="emoji">📝</span>
-            Notes
-          </button>
-
-          <button class="app-icon" onclick="openApp('music')">
-            <span class="emoji">🎵</span>
-            Music
-          </button>
-
-          <button class="app-icon" onclick="openApp('social')">
-            <span class="emoji">📷</span>
-            Social
-          </button>
-
-          <button class="app-icon" onclick="openApp('calendar')">
-            <span class="emoji">📅</span>
-            Calendar
-          </button>
-
-          <button class="app-icon" onclick="openApp('settings')">
-            <span class="emoji">⚙️</span>
-            Settings
-          </button>
-
-        </div>
-
-        <!-- Bottom dock -->
-        <div class="dock">
-
-          <button class="app-icon" onclick="openApp('messages')">
-            <span class="emoji">💬</span>
-          </button>
-
-          <button class="app-icon" onclick="openApp('photos')">
-            <span class="emoji">📸</span>
-          </button>
-
-          <button class="app-icon" onclick="openApp('music')">
-            <span class="emoji">🎧</span>
-          </button>
-
-        </div>
-
-      </section>
-
-      <!-- =================================
-           10. APPLICATION WINDOW
-           ================================= -->
-
-      <section class="app" id="app">
-
-        <!-- Return to home screen -->
-        <button class="back" onclick="goHome()">
-          ‹ Home
+        <button class="key" onclick="enterDigit('2')">
+          2<small>ABC</small>
         </button>
 
-        <!-- Application content gets inserted here -->
-        <div id="appContent"></div>
+        <button class="key" onclick="enterDigit('3')">
+          3<small>DEF</small>
+        </button>
 
-      </section>
+        <button class="key" onclick="enterDigit('4')">
+          4<small>GHI</small>
+        </button>
 
-      <!-- Bottom home indicator -->
-      <div class="home-indicator" onclick="goHome()"></div>
+        <button class="key" onclick="enterDigit('5')">
+          5<small>JKL</small>
+        </button>
 
-    </div>
+        <button class="key" onclick="enterDigit('6')">
+          6<small>MNO</small>
+        </button>
+
+        <button class="key" onclick="enterDigit('7')">
+          7<small>PQRS</small>
+        </button>
+
+        <button class="key" onclick="enterDigit('8')">
+          8<small>TUV</small>
+        </button>
+
+        <button class="key" onclick="enterDigit('9')">
+          9<small>WXYZ</small>
+        </button>
+
+        <button class="key empty"></button>
+
+        <button class="key" onclick="enterDigit('0')">
+          0
+        </button>
+
+        <button class="key delete" onclick="deleteDigit()">
+          ⌫
+        </button>
+
+      </div>
+
+      <button class="passcode-cancel" onclick="cancelPasscode()">
+        Cancel
+      </button>
+
+    </section>
+
+    <!-- HOME SCREEN -->
+
+    <section class="home" id="home">
+
+      <div class="welcome">Good morning ☁️</div>
+
+      <div class="grid">
+
+        <button class="app-icon" onclick="openApp('messages')">
+          <span class="emoji">💬</span>
+          Messages
+        </button>
+
+        <button class="app-icon" onclick="openApp('photos')">
+          <span class="emoji">🌄</span>
+          Photos
+        </button>
+
+        <button class="app-icon" onclick="openApp('notes')">
+          <span class="emoji">📝</span>
+          Notes
+        </button>
+
+        <button class="app-icon" onclick="openApp('music')">
+          <span class="emoji">🎵</span>
+          Music
+        </button>
+
+        <button class="app-icon" onclick="openApp('social')">
+          <span class="emoji">📷</span>
+          Social
+        </button>
+
+        <button class="app-icon" onclick="openApp('calendar')">
+          <span class="emoji">📅</span>
+          Calendar
+        </button>
+
+        <button class="app-icon" onclick="openApp('settings')">
+          <span class="emoji">⚙️</span>
+          Settings
+        </button>
+
+      </div>
+
+      <div class="dock">
+
+        <button class="app-icon" onclick="openApp('messages')">
+          <span class="emoji">💬</span>
+        </button>
+
+        <button class="app-icon" onclick="openApp('photos')">
+          <span class="emoji">📸</span>
+        </button>
+
+        <button class="app-icon" onclick="openApp('music')">
+          <span class="emoji">🎧</span>
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- APPLICATION WINDOW -->
+
+    <section class="app" id="app">
+
+      <button class="back" onclick="goHome()">
+        ‹ Home
+      </button>
+
+      <div id="appContent"></div>
+
+    </section>
+
+    <div class="home-indicator" onclick="goHome()"></div>
+
   </div>
+</div>
 
 
-  <!-- =======================================
-       11. JAVASCRIPT: CHARACTER INFORMATION
-       Customize the fictional character here.
-       ======================================= -->
+<script>
 
-  <script>
+// CHARACTER INFORMATION
 
-    // Character profile and fictional phone content
-    const character = {
+const character = {
 
-      // Character's name
-      name: "Alex",
+  name: "Alex",
 
-      // Sample text conversations
-      messages: [
-        ["Jamie", "Are you awake?"],
-        ["Alex", "Unfortunately."],
-        ["Jamie", "We need to talk."],
-        ["Alex", "About what?"],
-        ["Jamie", "You know exactly what."]
-      ],
+  messages: [
+    ["Jamie", "Are you awake?"],
+    ["Alex", "Unfortunately."],
+    ["Jamie", "We need to talk."],
+    ["Alex", "About what?"],
+    ["Jamie", "You know exactly what."]
+  ],
 
-      // Character's personal notes
-      notes: `Things I need to remember:
+  notes: `Things I need to remember:
 
 - Buy coffee
 - Call Jamie back
@@ -410,182 +637,286 @@
 
 Some things are better left unsaid.`,
 
-      // Temporary photo gallery
-      photos: ["🌅", "🌆", "🌙", "☕", "🌊", "📷"]
+  photos: ["🌅", "🌆", "🌙", "☕", "🌊", "📷"]
 
-    };
-
-
-    // =======================================
-    // 12. UNLOCK PHONE
-    // Hides the lock screen and shows home.
-    // =======================================
-
-    function unlockPhone() {
-
-      document.getElementById("lock").style.display = "none";
-
-      document.getElementById("home").style.display = "block";
-
-    }
+};
 
 
-    // =======================================
-    // 13. OPEN APPLICATION
-    // Displays the selected application's UI.
-    // =======================================
+// PASSCODE CONFIGURATION
 
-    function openApp(name) {
-
-      const content = document.getElementById("appContent");
-
-      // Hide home screen
-      document.getElementById("home").style.display = "none";
-
-      // Display application window
-      document.getElementById("app").style.display = "block";
+const correctPasscode = "0126";
+let enteredPasscode = "";
 
 
-      // Define the contents of each application
-      const apps = {
+// SWIPE TO PASSCODE
 
-        // MESSAGES
-        messages: `
-          <h2>Messages</h2>
-          <p>Recent conversations</p>
+const swipeArea = document.getElementById("swipeArea");
 
-          ${character.messages.map(m => `
-            <div class="chat">
-              <b>${m[0]}</b><br>
-              ${m[1]}
-            </div>
-          `).join("")}
-        `,
+let touchStartY = 0;
+let touchStartX = 0;
 
-        // NOTES
-        notes: `
-          <h2>Notes</h2>
-          <p>All iCloud notes</p>
+swipeArea.addEventListener("pointerdown", function(e) {
+  touchStartY = e.clientY;
+  touchStartX = e.clientX;
+});
 
-          <div class="note">${character.notes}</div>
-        `,
+swipeArea.addEventListener("pointerup", function(e) {
 
-        // PHOTOS
-        photos: `
-          <h2>Photos</h2>
-          <p>Recent memories</p>
+  const differenceY = touchStartY - e.clientY;
+  const differenceX = Math.abs(touchStartX - e.clientX);
 
-          <div class="photo-grid">
-            ${character.photos.map(p => `
-              <div class="photo">${p}</div>
-            `).join("")}
-          </div>
-        `,
+  // Detect upward swipe
 
-        // MUSIC
-        music: `
-          <h2>Music</h2>
+  if (differenceY > 35 && differenceX < 80) {
+    showPasscode();
+  }
 
-          <div class="note">
-            🎧 Currently listening
-
-            Somewhere Only We Know
-
-            Favorite playlist: Late Nights
-          </div>
-        `,
-
-        // SOCIAL MEDIA
-        social: `
-          <h2>Social</h2>
-
-          <div class="note">
-            @alex
-
-            Just another ordinary day.
-
-            ❤️ 128 likes
-          </div>
-        `,
-
-        // CALENDAR
-        calendar: `
-          <h2>Calendar</h2>
-
-          <div class="note">
-            November 5
-
-            9:00 AM — Class
-
-            2:00 PM — Meet Jamie
-
-            8:00 PM — Call home
-          </div>
-        `,
-
-        // SETTINGS
-        settings: `
-          <h2>Settings</h2>
-
-          <div class="chat">✈️ Airplane Mode</div>
-          <div class="chat">📶 Wi-Fi</div>
-          <div class="chat">🔋 Battery</div>
-          <div class="chat">👤 About ${character.name}</div>
-        `
-
-      };
+});
 
 
-      // Insert selected app into the screen
-      content.innerHTML = apps[name] || "<h2>App not found</h2>";
+// SHOW PASSCODE SCREEN
 
-    }
+function showPasscode() {
 
+  document.getElementById("lock").style.display = "none";
 
-    // =======================================
-    // 14. RETURN TO HOME SCREEN
-    // Closes the currently opened application.
-    // =======================================
+  document.getElementById("passcode").style.display = "block";
 
-    function goHome() {
+  enteredPasscode = "";
 
-      document.getElementById("app").style.display = "none";
+  updatePasscodeDots();
 
-      document.getElementById("home").style.display = "block";
+  document.getElementById("passcodeError").textContent = "";
 
-    }
+}
 
 
-    // =======================================
-    // 15. UPDATE CLOCK
-    // Refreshes the time every 30 seconds.
-    // =======================================
+// CANCEL PASSCODE
 
-    function updateClock() {
+function cancelPasscode() {
 
-      const now = new Date();
+  document.getElementById("passcode").style.display = "none";
 
-      // Format visitor's local time
-      const time = now.toLocaleTimeString([], {
-        hour: "numeric",
-        minute: "2-digit"
-      });
+  document.getElementById("lock").style.display = "block";
 
-      // Update lock screen clock
-      document.getElementById("clock").textContent = time;
+  enteredPasscode = "";
 
-      // Update status bar clock
-      document.getElementById("statusTime").textContent = time;
+}
 
-    }
 
-    // Display clock immediately
-    updateClock();
+// ENTER PASSCODE DIGITS
 
-    // Refresh clock every 30 seconds
-    setInterval(updateClock, 30000);
+function enterDigit(digit) {
 
-  </script>
+  if (enteredPasscode.length >= 4) return;
+
+  enteredPasscode += digit;
+
+  updatePasscodeDots();
+
+  if (enteredPasscode.length === 4) {
+
+    setTimeout(checkPasscode, 180);
+
+  }
+
+}
+
+
+// UPDATE PASSCODE DOTS
+
+function updatePasscodeDots() {
+
+  const dots = document.querySelectorAll(".passcode-dot");
+
+  dots.forEach((dot, index) => {
+
+    dot.classList.toggle(
+      "filled",
+      index < enteredPasscode.length
+    );
+
+  });
+
+}
+
+
+// DELETE LAST DIGIT
+
+function deleteDigit() {
+
+  enteredPasscode = enteredPasscode.slice(0, -1);
+
+  updatePasscodeDots();
+
+  document.getElementById("passcodeError").textContent = "";
+
+}
+
+
+// CHECK PASSCODE
+
+function checkPasscode() {
+
+  if (enteredPasscode === correctPasscode) {
+
+    document.getElementById("passcode").style.display = "none";
+
+    document.getElementById("home").style.display = "block";
+
+    enteredPasscode = "";
+
+  } else {
+
+    document.getElementById("passcodeError").textContent =
+      "Incorrect passcode. Try again.";
+
+    enteredPasscode = "";
+
+    setTimeout(updatePasscodeDots, 350);
+
+  }
+
+}
+
+
+// OPEN APPLICATION
+
+function openApp(name) {
+
+  const content = document.getElementById("appContent");
+
+  document.getElementById("home").style.display = "none";
+
+  document.getElementById("app").style.display = "block";
+
+  const apps = {
+
+    messages: `
+      <h2>Messages</h2>
+      <p>Recent conversations</p>
+
+      ${character.messages.map(m => `
+        <div class="chat">
+          <b>${m[0]}</b><br>
+          ${m[1]}
+        </div>
+      `).join("")}
+    `,
+
+    notes: `
+      <h2>Notes</h2>
+      <p>All iCloud notes</p>
+
+      <div class="note">${character.notes}</div>
+    `,
+
+    photos: `
+      <h2>Photos</h2>
+      <p>Recent memories</p>
+
+      <div class="photo-grid">
+        ${character.photos.map(p => `
+          <div class="photo">${p}</div>
+        `).join("")}
+      </div>
+    `,
+
+    music: `
+      <h2>Music</h2>
+
+      <div class="note">
+        🎧 Currently listening
+
+        Somewhere Only We Know
+
+        Favorite playlist: Late Nights
+      </div>
+    `,
+
+    social: `
+      <h2>Social</h2>
+
+      <div class="note">
+        @alex
+
+        Just another ordinary day.
+
+        ❤️ 128 likes
+      </div>
+    `,
+
+    calendar: `
+      <h2>Calendar</h2>
+
+      <div class="note">
+        November 5
+
+        9:00 AM — Class
+
+        2:00 PM — Meet Jamie
+
+        8:00 PM — Call home
+      </div>
+    `,
+
+    settings: `
+      <h2>Settings</h2>
+
+      <div class="chat">✈️ Airplane Mode</div>
+      <div class="chat">📶 Wi-Fi</div>
+      <div class="chat">🔋 Battery</div>
+      <div class="chat">👤 About ${character.name}</div>
+    `
+
+  };
+
+  content.innerHTML = apps[name] || "<h2>App not found</h2>";
+
+}
+
+
+// RETURN TO HOME SCREEN
+
+function goHome() {
+
+  document.getElementById("app").style.display = "none";
+
+  document.getElementById("home").style.display = "block";
+
+}
+
+
+// UPDATE CLOCK AND DATE
+
+function updateClock() {
+
+  const now = new Date();
+
+  const time = now.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit"
+  });
+
+  const date = now.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
+
+  document.getElementById("clock").textContent = time;
+
+  document.getElementById("statusTime").textContent = time;
+
+  document.getElementById("lockDate").textContent = date;
+
+}
+
+updateClock();
+
+setInterval(updateClock, 30000);
+
+</script>
 
 </body>
 </html>
