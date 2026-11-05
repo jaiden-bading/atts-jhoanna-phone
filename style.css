@@ -615,4 +615,26 @@ body {
   padding: 15px 0;
 }
 
+
+/* LOCK SCREEN UNLOCK ANIMATION */
+
+.lock {
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateY(0);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.lock.unlocking {
+  transform: translateY(-100%);
+}
+
+/* PASSCODE SCREEN */
+
+.passcode {
+  z-index: 3;
+}
+
+
 </style>
