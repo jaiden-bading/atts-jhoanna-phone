@@ -44,9 +44,6 @@ body {
   position: relative;
   background: #263747;
 }
-
-/* STATUS BAR */
-
 .status {
   height: 42px;
   padding: 12px 25px 0;
@@ -58,7 +55,6 @@ body {
   z-index: 15;
   pointer-events: none;
 }
-
 .dynamic-island {
   position: absolute;
   width: 105px;
@@ -70,17 +66,13 @@ body {
   transform: translateX(-50%);
   z-index: 20;
 }
-
-/* LOCK SCREEN */
-
-.lock,
+.lock,                    /* lockscreen formatting */
 .passcode,
 .home,
 .app {
   position: absolute;
   inset: 42px 0 0;
 }
-
 .lock {
   text-align: center;
   padding-top: 75px;
@@ -88,12 +80,10 @@ body {
     linear-gradient(160deg, #607d95aa, #11182755),
     linear-gradient(160deg, #536c83, #263747 48%, #171c29);
 }
-
 .lock-date {
   font-size: 16px;
   font-weight: 500;
 }
-
 .clock {
   font-size: 76px;
   font-weight: 300;
@@ -101,10 +91,7 @@ body {
   margin-top: 8px;
   line-height: 1.1;
 }
-
-/* SMALL SWIPE INDICATOR */
-
-.swipe-area {
+.swipe-area {            /* swipe to unlock feature */
   position: absolute;
   bottom: 12px;
   left: 0;
@@ -119,24 +106,19 @@ body {
   touch-action: none;
   user-select: none;
 }
-
 .swipe-text {
   font-size: 11px;
   font-weight: 500;
   color: #ffffffc9;
   letter-spacing: .2px;
 }
-
 .swipe-line {
   width: 35px;
   height: 4px;
   border-radius: 10px;
   background: #ffffffd9;
 }
-
-/* LOCK SCREEN SHORTCUTS */
-
-.lock-shortcuts {
+.lock-shortcuts {              /* lockscreen shortcuts - flashlight and camera */
   position: absolute;
   bottom: 28px;
   left: 22px;
